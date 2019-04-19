@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>vue练习</title>
+    <!--引入vue.js-->
+    <script type="text/javascript" src="jq/vue.min.js">
+
+    </script>
+</head>
+<body>
+<!--使用vue.js-->
+<div id="vue_det">
+    <!-- {{ }} 用于输出对象属性和函数返回值。-->
+    <h1>site : {{site}}</h1>
+    <h1>url : {{url}}</h1>
+    <h1>{{details()}}</h1>
+</div>
+</body>
+
+<!--使用vue.js-->
+<script type="text/javascript">
+    //    每个 Vue 应用都需要通过实例化 Vue 来实现
+    var vm = new Vue({
+        el: '#vue_det',
+//        data 用于定义属性，实例中有三个属性分别为：site、url、alexa。
+        data: {
+            site: "菜鸟教程",
+            url: "www.runoob.com",
+            alexa: "10000"
+        },
+//        methods 用于定义的函数，可以通过 return 来返回函数值。
+        methods: {
+            details: function() {
+                return  this.site + " - 学的不仅是技术，更是梦想！";
+            }
+        }
+    })
+</script>
+</html>
