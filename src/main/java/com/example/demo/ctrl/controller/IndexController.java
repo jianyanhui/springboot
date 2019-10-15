@@ -43,4 +43,6 @@ public class IndexController {
         System.out.println("获取的配置项转dto为："+ LogToString.objectToString(configToDto));
         return "vue";//返回html文件名
     }
+
+
 }

@@ -26,8 +26,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
+		<!--切面-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 
 		<!--mybatis连接mysql-->
 		<!--<dependency>
@@ -50,6 +60,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-boot-starter-logging</artifactId>
+					<groupId>org.springframework.boot</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!--swagger相关  -->
@@ -83,6 +99,16 @@
 			<artifactId>rocketmq-client</artifactId>
 			<version>4.2.0</version>
 		</dependency>
+		<!--首先，认识一下三胞胎
+		log4j是apache实现的一个开源日志组件
+		logback同样是由log4j的作者设计完成的，拥有更好的特性，用来取代log4j的一个日志框架，是slf4j的原生实现
+		Log4j2是log4j 1.x和logback的改进版，据说采用了一些新技术（无锁异步、等等），使得日志的吞吐量、性能比log4j 1.x提高10倍，并解决了一些死锁的bug，而且配置更加简单灵活
+		然后，了解一下，使用slf4j+log4j和直接用log4j的区别
+		log4j、logback、log4j2都是一种日志具体实现框架，所以既可以单独使用也可以结合slf4j一起搭配使用-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
 <!--		<dependency>-->
@@ -101,6 +127,110 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<!--打包目录配置-->
+		<!--<resources>
+			&lt;!&ndash;设置配置文件读取的路径，配合profiles标签中使用&ndash;&gt;
+			<resource>
+				<directory>src/main/resources/${env}</directory>
+			</resource>
+
+			<resource>
+				&lt;!&ndash;src/main/java目录下所有文件打包&ndash;&gt;
+				<directory>src/main/java</directory>
+				<includes>
+					<include>*</include>
+				</includes>
+			</resource>
+
+			<resource>
+				&lt;!&ndash;src/main/resources目录下所有文件打包&ndash;&gt;
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		&lt;!&ndash;打包配置&ndash;&gt;
+		<plugins>
+			&lt;!&ndash; 配置资源文件插件maven-compiler-plugin 编译插件&ndash;&gt;
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			&lt;!&ndash; 配置编译插件&ndash;&gt;
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			&lt;!&ndash;配置单元测试&ndash;&gt;
+			<plugin>
+				&lt;!&ndash;Maven通过Maven Surefire Plugin插件执行单元测试&ndash;&gt;
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19</version>
+				<configuration>
+					&lt;!&ndash;跳过单元测试，但是会继续编译&ndash;&gt;
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			&lt;!&ndash; 配置Jar打包插件&ndash;&gt;
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<excludes>
+						<exclude>*/*.xml</exclude>
+						<exclude>*.properties</exclude>
+						<exclude>**/Test/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			&lt;!&ndash; 配置Jar打包源文件插件&ndash;&gt;
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			&lt;!&ndash;输出依赖的jar&ndash;&gt;
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>-->
 	</build>
 
 </project>
