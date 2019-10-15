@@ -1,0 +1,7 @@
+
+注解没有实际用途，只有作为一个解耦的条件，比如引入注解到方法上和切面上，执行方法时自动先执行切面，这时候注解相当于关联了方法和切面；
+
+2：springboot注解与切面的关系：https://blog.csdn.net/u012740706/article/details/82079904
+https://blog.csdn.net/u013825231/article/details/80468167
+Springboot 结合aop,自定义注解，切面的理解
+Springboot自定义注解：新建注解文件+aop切面实现自定义注解
