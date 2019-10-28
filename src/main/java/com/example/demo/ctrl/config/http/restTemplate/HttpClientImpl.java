@@ -21,6 +21,20 @@ public class HttpClientImpl implements HttpClient{
     @Autowired
     protected RestTemplate restTemplate;
 
+    protected HttpConfig httpConfig;
+
+    /**
+     * 无参构造
+     */
+    public HttpClientImpl(){
+
+    }
+    /**
+     * 有参构造
+     */
+    public HttpClientImpl(@NonNull HttpConfig httpConfig){
+        this.httpConfig=httpConfig;
+    }
     //支持post/get调用
     public <T> T exec(@NonNull PortalHttpRequest request,Class<T> clazz){
 
