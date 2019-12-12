@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 //@Slf4j
 public class IndexController {
@@ -44,5 +49,28 @@ public class IndexController {
         return "vue";//返回html文件名
     }
 
+    /**
+     * thymeleaf返回视图
+     * @param model
+     * @return
+     */
+    @RequestMapping("/thymeleaf")
+    public String thymeleaf(Model model){
+        User u=new User();
+        u.setUsername("马先生");
+        u.setSex("男");
+        model.addAttribute("uuuser",u);
+
+        List<User> listUser=new ArrayList<User>();
+        for (int i = 0; i <3 ; i++) {
+            User u1=new User();
+            u1.setUsername("马先生"+i);
+            u1.setSex("男"+i);
+            listUser.add(u1);
+        }
+        model.addAttribute("listUser",listUser);
+
+        return "thymeleaf";//返回html文件名
+    }
 
 }

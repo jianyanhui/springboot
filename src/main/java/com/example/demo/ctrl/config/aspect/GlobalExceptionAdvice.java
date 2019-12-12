@@ -29,8 +29,10 @@ public class GlobalExceptionAdvice {
                 ",flowId:"+request.getRequestURI()+
                 ",resultCode:"+e.getResultCode().getCode()+
                 ",resultMessage:"+e.getResultCode().getMessage()+
-                ",data:"+e.getData()
+                ",data:"+e.getData()+
+                ",异常详细位置:",e
         );
+        log.error("flowid:{},异常详细位置2:",request.getRequestURI(),e);
         return ResultReturn.build(e.getResultCode(),e.getData());
     }
 

@@ -19,8 +19,10 @@
             </Filters>
             <PatternLayout>
                 <cahrset>UTF-8</cahrset>
-                <!--MDC配置三个参数【%X{F} ,%X{U} ,%X{T}】,这三个参数是MDC.put("T","33333")放入的，注意X一定要大写-->
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] 【%X{F} ,%X{U} ,%X{T}】 %-5level %logger{36}- %msg%n</Pattern>
+                <!--MDC配置三个参数【%X{F} ,%X{U} ,%X{T}】,这三个参数是MDC.put("T","33333")放入的，注意X一定要大写，参数的具体含义可以百度
+                教程：https://www.iteye.com/blog/shift-alt-ctrl-2345272
+                -->
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] 【%X{F} ,%X{U} ,%X{T}】 %-5level %logger{36}--%M %L- %m%n</Pattern>
             </PatternLayout>
            <!-- <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class %L %M - %msg%n"/>-->
         </console>

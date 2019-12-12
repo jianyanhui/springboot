@@ -15,7 +15,9 @@ public class MDCUtil {
         if(StringUtils.isEmpty(value)){
             return;
         }
-        value="FlowId="+value;
+        if(!value.contains("F=")){
+            value="F="+value;
+        }
         setMDC("F",value);
     }
 

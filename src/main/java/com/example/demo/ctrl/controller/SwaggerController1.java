@@ -162,4 +162,16 @@ public class SwaggerController1 {
         return "demo3成功哈哈哈哈1";
     }
 
+    /**
+     * swagger注解放在入参dto上
+     * @param u
+     * @return
+     */
+    @ApiOperation(value="获取用户信息,批量获取json入参",notes="注意事项")
+    @RequestMapping(value="/demo4",method= RequestMethod.GET)//请求信息
+    public String demo4(User u){
+
+        return "成功";
+    }
+
 }

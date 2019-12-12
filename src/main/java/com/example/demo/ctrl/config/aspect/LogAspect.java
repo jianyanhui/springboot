@@ -1,7 +1,6 @@
 package com.example.demo.ctrl.config.aspect;
 
 import com.example.demo.ctrl.util.LogToString;
-import com.example.demo.ctrl.util.MDCUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -61,9 +60,7 @@ public class LogAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         Signature signature = joinPoint.getSignature();
-        MDCUtil.clear();
-        MDCUtil.setFlowId("2222");
-        MDCUtil.setActionId("33333");
+
         // 记录下请求内容
         log.info("request_id : " + ThreadLocalPool.request_id.get());
         log.info("URL : " + request.getRequestURL().toString());
@@ -85,7 +82,7 @@ public class LogAspect {
     public void afterReturning(JoinPoint joinPoint, Object ret) {
         // 处理完请求，返回内容
         log.info("RESPONSE : " + ret);
-        log.info("SPEND TIME : " + (System.currentTimeMillis() - ThreadLocalPool.request_time.get()));
+        log.info("SPEND TIME : " + (System.currentTimeMillis() - ThreadLocalPool.request_time.get())+" ms");
     }
 
 }

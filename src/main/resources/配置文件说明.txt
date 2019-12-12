@@ -1,4 +1,0 @@
-application.properties 是公用配置文件
-application-dev.properties  开发环境配置文件
-application-prd.properties  生产环境配置文件
-application-stg.properties  测试环境配置文件

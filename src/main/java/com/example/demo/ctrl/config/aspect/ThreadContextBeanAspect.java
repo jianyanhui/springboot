@@ -42,8 +42,8 @@ public class ThreadContextBeanAspect {
     /*前置通知*/
     @Before("pointCut()") //括号里面指定执行条件
     public void before() {
-        log.info("进入ThreadContextBeanAspect");
-//        MDCUtil.removeFlowId();
+
+        MDCUtil.removeFlowId();
         ContextBean.removeThreadContextBean();
         //创建缓存对象
         ContextBean c=null;
@@ -60,6 +60,7 @@ public class ThreadContextBeanAspect {
 
         ContextBean.setThreadContextBean(c);
         MDCUtil.setFlowId(c.getFlowId());
+        log.info("进入ThreadContextBeanAspect");
     }
 
 

@@ -11,4 +11,5 @@ public class School {
     private String envTestName;
     private String chang;//常量
     private com.example.demo.ctrl.config.ConfigToDto ConfigToDto;
+    private User user;
 }

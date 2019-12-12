@@ -45,7 +45,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-
+		<!--引入feign调http接口-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>2.1.1.RELEASE</version>
+		</dependency>
 
 		<!--mybatis连接mysql-->
 		<!--<dependency>

@@ -1,10 +1,10 @@
 package com.example.demo.ctrl.dto;
 
+import com.example.demo.ctrl.util.IDKeyUtil;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -12,6 +12,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Data
 public class ContextBean {
+    public static void main(String[] args) {
+        ContextBean c=new ContextBean();
+//        c.putParam("hh",false);
+        Boolean a=c.getParam("hh");//这里不要转为基本数据类型，会报空指针
+        if(a!=null && a){
+            System.out.println("结果2："+a);
+        }
+        System.out.println("结果："+a);
+        String s=null;
+
+    }
     //用于存放缓存类
     private static final ThreadLocal<ContextBean> thread_context_bean=new ThreadLocal<>();//线程安全存储
     /**flowid */
@@ -48,7 +59,7 @@ public class ContextBean {
     //获取新的上下文
     public static ContextBean build(){
         ContextBean c=new ContextBean();
-        c.setFlowId(UUID.randomUUID().toString());
+        c.setFlowId(IDKeyUtil.generateId());
         return c;
     }
 

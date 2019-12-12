@@ -1,10 +1,16 @@
 package com.example.demo.ctrl.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.ctrl.config.bean.beanConfig.PropertiesConfig;
+import com.example.demo.ctrl.config.http.feign.UserService;
 import com.example.demo.ctrl.config.http.restTemplate.HttpClient;
 import com.example.demo.ctrl.config.http.restTemplate.PortalHttpRequest;
+import com.example.demo.ctrl.config.threadTest.Thread.ReadThread;
+import com.example.demo.ctrl.exception.BusinessException;
+import com.example.demo.ctrl.exception.CommonResultCode;
 import com.example.demo.ctrl.test.order.BeanInterface;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -33,6 +39,12 @@ public class DemoController {
     //引入java方式配置的bean,默认为Bean方法名
     @Autowired
     private HttpClient icoreClient;
+    //fegin调接口测试
+    @Autowired
+    private UserService userService;
+    //获取java配置项
+    @Autowired
+    private PropertiesConfig propertiesConfig;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
@@ -45,7 +57,7 @@ public class DemoController {
     @Autowired
     private ApplicationContext applicationContext;
     //获取properties配置项http.config.icore.hostUrl，冒号后面指定默认值
-    @Value("${http.config.icore.hostUrl:默认值}")
+    @Value("${http.config.icore.hostUrl:默认值} : 默认值" )
     private String icoreUrl;
 
 
@@ -62,6 +74,9 @@ public class DemoController {
         portalHttpRequest.setMediaType(MediaType.APPLICATION_JSON_UTF8);
         String result=httpClientImpl.exec(portalHttpRequest,String.class);
         log.info("http调接口测试出参："+result);
+        //fegin调接口方式
+        String result2=userService.getUserinfo("11223");
+        log.info("fegin调接口测试出参："+result2);
         return result;
     }
 
@@ -70,7 +85,18 @@ public class DemoController {
     public String getName(){
 
         log.info("获取properties配置项http.config.icore.hostUrl："+icoreUrl);
+        String name=(String)(propertiesConfig.getUtil().getOrDefault("name","名字"));
+        log.info("获取properties配置项nme:"+name);
         return "我的名字是小明！";
+    }
+
+    /**
+     * 抛异常练习
+     * @return
+     */
+    @RequestMapping(value = "/exception")
+    public String exception(){
+        throw new BusinessException(CommonResultCode.LOGIN_FAIL);
     }
 
     /**
@@ -138,4 +164,20 @@ public class DemoController {
         return "bean容器练习！";
     }
 
+    /**
+     * 打日志练习
+     * @return
+     */
+    @RequestMapping(value = "/logTest")
+    public String logTest(){
+        log.info("主方法");
+        HashMap<Integer, Integer> hashMap = new HashMap();
+        /** 多线程编辑100次*/
+        for (int i = 0; i < 2; i++) {
+            new Thread(new ReadThread(MDC.get("F"))).start();
+        }
+
+
+        return "打多线程日志练习";
     }
+}
