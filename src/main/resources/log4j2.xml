@@ -5,7 +5,7 @@
     当设置成trace时，你会看到log4j2内部各种详细输出-->
 <!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
 <configuration status="trace" monitorInterval="30">
-    //定义一个这样的路径变量
+    <!--定义一个这样的路径变量-->
     <properties>
         <property name="LOG_DIR">/logs</property>
         <property name="LOG_NAME">myLog</property>

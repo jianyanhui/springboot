@@ -6,6 +6,7 @@ http://localhost:8080/user/getUser
 http://localhost:8080/thymeleaf
 http://localhost:8080/exception
 http://localhost:8080/logTest
+http://localhost:8080/handler
 
 http://localhost:8080/getName
 http://localhost:8080/redisTest

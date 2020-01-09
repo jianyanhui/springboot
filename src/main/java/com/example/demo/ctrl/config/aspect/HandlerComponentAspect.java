@@ -26,8 +26,9 @@ public class HandlerComponentAspect {
     /*前置通知*/
     @Before("pointCut() && @annotation(handlerComponent)") //括号里面指定执行条件作为入参
     public void before(JoinPoint joinPoint, HandlerComponent handlerComponent) {
-        log.info("进入HandlerComponentAspect");
+        log.info("进入HandlerComponentAspect:"+handlerComponent);
         current_handler.set(handlerComponent.threadHandler());
+        log.info("current_handler:"+current_handler.get());
     }
 
     public static void main(String[] args) {

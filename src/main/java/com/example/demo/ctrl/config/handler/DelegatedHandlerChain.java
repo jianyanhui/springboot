@@ -43,8 +43,9 @@ public class DelegatedHandlerChain implements OrderedHandler<ContextBean> {
         }
     }
 
-    public DelegatedHandlerChain() {
-    }
+    //无参构造要注释掉，否则有参构造不会自动启动
+//    public DelegatedHandlerChain() {
+//    }
 
     /**
      * 是否支持该参数进行处理
@@ -64,10 +65,12 @@ public class DelegatedHandlerChain implements OrderedHandler<ContextBean> {
     @Override
     public void handle(final ContextBean t){
         List<OrderedHandler<ContextBean>> handlers=handlerMap.get(HandlerComponentAspect.current_handler.get());
+        log.info("DelegatedHandlerChain处理:"+HandlerComponentAspect.current_handler.get());
+        log.info("handlers:"+handlers);
         if(handlers==null){return;}
         for (OrderedHandler<ContextBean> handler:handlers){
             long start=System.currentTimeMillis();
-            if(!t.isInterrupted()){
+            if(!t.isInterrupted()){//中断后续handler执行
                 handler.handle(t);
             }
             long end=System.currentTimeMillis();

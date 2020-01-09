@@ -1,11 +1,17 @@
 package com.example.demo.ctrl.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.ctrl.config.annotation.HandlerComponent;
 import com.example.demo.ctrl.config.bean.beanConfig.PropertiesConfig;
+import com.example.demo.ctrl.config.handler.OrderedHandler;
 import com.example.demo.ctrl.config.http.feign.UserService;
 import com.example.demo.ctrl.config.http.restTemplate.HttpClient;
 import com.example.demo.ctrl.config.http.restTemplate.PortalHttpRequest;
+import com.example.demo.ctrl.config.redis.RedisService;
 import com.example.demo.ctrl.config.threadTest.Thread.ReadThread;
+import com.example.demo.ctrl.dto.Author;
+import com.example.demo.ctrl.dto.ContextBean;
+import com.example.demo.ctrl.dto.HandlerConstants;
 import com.example.demo.ctrl.exception.BusinessException;
 import com.example.demo.ctrl.exception.CommonResultCode;
 import com.example.demo.ctrl.test.order.BeanInterface;
@@ -48,9 +54,14 @@ public class DemoController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
+    private RedisService redisService;
+    @Autowired
     private List<BeanInterface> beanList;
     @Autowired
     private Map<String, BeanInterface> beanMap;
+
+    @Autowired
+    private  OrderedHandler<ContextBean> handlerChain;
     /**
      * bean容器
      */
@@ -118,6 +129,20 @@ public class DemoController {
         return  "Redis调用成功"+re;
     }
 
+    /**
+     * 测试redis
+     * @return
+     */
+
+    @RequestMapping("/redisTest2")
+    public String redisTest2() throws InterruptedException {
+        String mobile="13314567896";
+        Author a=new Author();
+        a.setUid("123456789");
+        a.setMobile(mobile);
+        redisService.getAuthorInfo2(mobile,a);
+        return  "Redis2调用成功";
+    }
 
     /**
      * 排序练习，@Order,一般用@Order对list排序
@@ -179,5 +204,19 @@ public class DemoController {
 
 
         return "打多线程日志练习";
+    }
+
+    /**
+     * handler练习，策略模式应用
+     * @return
+     */
+    @RequestMapping(value = "/handler")
+    @HandlerComponent(threadHandler= HandlerConstants.handler) //策略模式应用,触发切面
+    public String handler(){
+        ContextBean t=ContextBean.getThreadContextBean();
+        log.info("请求入参："+t);
+        //开始执行handler链
+        handlerChain.handle(t);
+        return "handler练习";
     }
 }
